@@ -1,19 +1,19 @@
+#[macro_use]
+mod macros;
+mod app;
+mod cli;
+mod commands;
+mod config;
+
+use anyhow::Result;
 use clap::Parser;
 
-#[derive(Parser)]
-struct Cli {
-    pattern: String,
-    path: std::path::PathBuf,
-}
+use crate::cli::Cli;
 
-fn main() {
-    let args = Cli::parse();
+fn main() -> Result<()> {
+    let cli = Cli::parse();
+    app::set_global_verbosity(cli.verbose.log_level_filter());
+    app::set_global_config(config::load()?);
 
-    let content = std::fs::read_to_string(&args.path).expect("could not read file");
-
-    for line in content.lines() {
-        if line.contains(&args.pattern) {
-            println!("{}", line);
-        }
-    }
+    cli.exec()
 }
