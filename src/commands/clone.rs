@@ -30,6 +30,11 @@ impl Cli {
         let path = files::resolve_path(&self.path)
             .map_err(|e| anyhow!("failed to resolve path: {}", e))?;
 
+        if path.is_dir() {
+            spinner.fail("Failed to clone repository");
+            return Err(anyhow!("there is already a directory at that location"));
+        }
+
         Repository::clone(&url, &path) //
             .map_err(|e| anyhow!("failed to clone repo: {}", e))?;
 
