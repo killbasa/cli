@@ -1,14 +1,16 @@
 use anyhow::Result;
 use clap::Args;
 
-/// Set the dotfiles env var
+use crate::config;
+
+/// Locate the config file
 #[derive(Args, Debug)]
 #[command()]
 pub struct Cli {}
 
 impl Cli {
     pub fn exec(&self) -> Result<()> {
-        display!("{}", "set");
+        display!("Config path: {}", config::path()?.display());
 
         Ok(())
     }

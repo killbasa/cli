@@ -11,15 +11,13 @@ pub struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
-    Diff(super::diff::Cli),
-    Find(super::find::Cli),
+    Dotfiles(super::dotfiles::Cli),
 }
 
 impl Cli {
     pub fn exec(&self) -> Result<()> {
         match &self.command {
-            Commands::Diff(cli) => cli.exec(),
-            Commands::Find(cli) => cli.exec(),
+            Commands::Dotfiles(cli) => cli.exec(),
         }
     }
 }

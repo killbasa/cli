@@ -3,17 +3,17 @@ use confy;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
-const APP_NAME: &str = "rusty";
+const APP_NAME: &str = "kb";
 const FILE_STEM: &str = "config";
 
 #[derive(Deserialize, Serialize, Clone, Debug)]
 pub struct Config {
-    pub repo: String,
+    pub dotfiles: Option<String>,
 }
 
 impl Default for Config {
     fn default() -> Self {
-        Self { repo: "".into() }
+        Self { dotfiles: None }
     }
 }
 
@@ -24,4 +24,8 @@ pub fn path() -> Result<PathBuf> {
 
 pub fn load() -> Result<Config> {
     confy::load(APP_NAME, FILE_STEM).with_context(|| "unable to load config")
+}
+
+pub fn save(config: Config) -> Result<()> {
+    confy::store(APP_NAME, FILE_STEM, config).with_context(|| "unable to save config")
 }

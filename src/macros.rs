@@ -4,7 +4,7 @@ macro_rules! display {
         println!(
             "{}",
             format!($($arg)*)
-                .if_supports_color(owo_colors::Stream::Stdout, |text| text.bold())
+                .if_supports_color(owo_colors::Stream::Stdout, |text| text)
         );
     }};
 }
