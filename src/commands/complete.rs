@@ -9,7 +9,7 @@ use crate::Cli as RootCli;
 #[derive(Args, Debug)]
 #[command()]
 pub struct Cli {
-    /// The shell to make autocompletions for
+    /// The shell to generate autocompletions for
     #[arg(value_enum)]
     shell: Shell,
 }

@@ -27,6 +27,11 @@ impl Cli {
             .map_err(|_| anyhow!("please provide a valid URL"))?
             .to_string();
 
+        if !url.ends_with(".git") {
+            spinner.fail("Failed to clone repository");
+            return Err(anyhow!("make sure the URL ends with \".git\""));
+        }
+
         let path = files::resolve_path(&self.path)
             .map_err(|e| anyhow!("failed to resolve path: {}", e))?;
 

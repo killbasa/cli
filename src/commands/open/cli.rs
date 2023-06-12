@@ -1,7 +1,7 @@
 use anyhow::Result;
 use clap::{Args, Subcommand};
 
-/// Generate a repository from a template
+/// Open a package's home page
 #[derive(Args, Debug)]
 #[command()]
 pub struct Cli {
@@ -11,13 +11,15 @@ pub struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
-    Init(super::init::Cli),
+    Node(super::node::Cli),
+    Rust(super::rust::Cli),
 }
 
 impl Cli {
     pub fn exec(&self) -> Result<()> {
         match &self.command {
-            Commands::Init(cli) => cli.exec(),
+            Commands::Node(cli) => cli.exec(),
+            Commands::Rust(cli) => cli.exec(),
         }
     }
 }

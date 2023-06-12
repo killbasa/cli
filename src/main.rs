@@ -1,5 +1,3 @@
-#[macro_use]
-mod macros;
 mod app;
 mod commands;
 mod config;
@@ -22,6 +20,7 @@ enum Commands {
     Complete(commands::complete::Cli),
     Config(commands::config::cli::Cli),
     Dotfiles(commands::dotfiles::cli::Cli),
+    Open(commands::open::cli::Cli),
     Template(commands::template::cli::Cli),
 }
 
@@ -34,6 +33,7 @@ fn main() -> Result<()> {
         Commands::Complete(cli) => cli.exec(),
         Commands::Config(cli) => cli.exec(),
         Commands::Dotfiles(cli) => cli.exec(),
+        Commands::Open(cli) => cli.exec(),
         Commands::Template(cli) => cli.exec(),
     }
 }
