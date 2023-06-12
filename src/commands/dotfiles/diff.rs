@@ -1,10 +1,10 @@
 use anyhow::Result;
 use clap::Args;
-use git2::{Repository, StatusOptions};
+use git2::Repository;
 
 use crate::app;
 
-/// Check if the dotfiles path is set
+/// Check if there are uncommited dotfile changes
 #[derive(Args, Debug)]
 #[command()]
 pub struct Cli {}
@@ -14,16 +14,15 @@ impl Cli {
         let config = app::config().clone();
 
         match config.dotfiles {
-            None => display!("No dotfiles path set"),
+            None => println!("No dotfiles path set"),
             Some(ref dotfiles) => {
                 let repo = Repository::open(dotfiles)?;
 
-                let mut opts = StatusOptions::new();
-                let statuses = repo.statuses(Some(&mut opts))?;
+                let statuses = repo.statuses(None)?;
 
                 match statuses.len() {
-                    0 => display!("Your dotfiles repository is up to date"),
-                    _ => display!("Your dotfiles repository has uncommitted changes"),
+                    0 => println!("Your dotfiles repository is up to date"),
+                    _ => println!("Your dotfiles repository has uncommitted changes"),
                 }
             }
         }

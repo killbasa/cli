@@ -8,12 +8,16 @@ const FILE_STEM: &str = "config";
 
 #[derive(Deserialize, Serialize, Clone, Debug)]
 pub struct Config {
+    pub email: Option<String>,
     pub dotfiles: Option<String>,
 }
 
 impl Default for Config {
     fn default() -> Self {
-        Self { dotfiles: None }
+        Self {
+            email: None,
+            dotfiles: None,
+        }
     }
 }
 

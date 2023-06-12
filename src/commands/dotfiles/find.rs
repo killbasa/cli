@@ -3,7 +3,7 @@ use clap::Args;
 
 use crate::app;
 
-/// Check if the dotfiles path is set
+/// Check the dotfiles path
 #[derive(Args, Debug)]
 #[command()]
 pub struct Cli {}
@@ -13,8 +13,8 @@ impl Cli {
         let config = app::config().clone();
 
         match config.dotfiles {
-            None => display!("No dotfiles path is set"),
-            Some(ref url) => display!("Dotfiles path: {}", url),
+            None => println!("No dotfiles path set"),
+            Some(ref url) => println!("Dotfiles path: {}", url),
         }
 
         Ok(())

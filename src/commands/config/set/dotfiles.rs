@@ -3,11 +3,11 @@ use clap::Args;
 
 use crate::{app, config, internal::files};
 
-/// Set the dotfiles repo path
+/// Set the dotfiles repository path
 #[derive(Args, Debug)]
 #[command()]
 pub struct Cli {
-    /// The path to the dotfiles repo
+    /// The path to the dotfiles repository
     path: String,
 }
 
@@ -23,7 +23,7 @@ impl Cli {
         config.dotfiles = Some(path.clone());
         config::save(config)?;
 
-        display!("Dotfiles path set to: {}", path);
+        println!("Dotfiles path set to: {}", path);
 
         Ok(())
     }

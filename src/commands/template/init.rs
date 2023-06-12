@@ -19,7 +19,7 @@ pub struct Cli {
     template: Templates,
     /// The output location
     path: Option<String>,
-    /// Intialize a git repository
+    /// If a git repository should be initialized
     #[arg(short, long)]
     git: bool,
 }
