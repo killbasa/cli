@@ -36,9 +36,9 @@ impl Cli {
         let path = files::resolve_path(&self.path)
             .map_err(|e| anyhow!("failed to resolve path: {}", e))?;
 
-        if path.is_dir() {
+        if path.is_dir() && !path.read_dir()?.next().is_none() {
             spinner.fail("Failed to clone template");
-            return Err(anyhow!("there is already a directory at that location"));
+            return Err(anyhow!("there are already files at that location"));
         }
 
         let temp_path = format!("{}/{}", path.display(), now);
