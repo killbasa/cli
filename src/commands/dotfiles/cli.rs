@@ -13,6 +13,7 @@ pub struct Cli {
 enum Commands {
     Diff(super::diff::Cli),
     Find(super::find::Cli),
+    Open(super::open::Cli),
 }
 
 impl Cli {
@@ -20,6 +21,7 @@ impl Cli {
         match &self.command {
             Commands::Diff(cli) => cli.exec(),
             Commands::Find(cli) => cli.exec(),
+            Commands::Open(cli) => cli.exec(),
         }
     }
 }

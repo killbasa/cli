@@ -14,7 +14,7 @@ impl Cli {
 
         match config.dotfiles {
             None => println!("No dotfiles path set"),
-            Some(ref url) => println!("Dotfiles path: {}", url),
+            Some(ref path) => println!("Dotfiles path: {}", path),
         }
 
         Ok(())
