@@ -15,8 +15,8 @@ impl Cli {
 
         match config.dotfiles {
             None => println!("No dotfiles path set"),
-            Some(ref dotfiles) => {
-                let repo = Repository::open(dotfiles)?;
+            Some(ref path) => {
+                let repo = Repository::open(path)?;
 
                 let statuses = repo.statuses(None)?;
 
