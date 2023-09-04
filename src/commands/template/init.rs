@@ -26,7 +26,7 @@ pub struct Cli {
 
 impl Cli {
     pub fn exec(&self) -> Result<()> {
-        let spinner = Spinner::new(spinners::Dots, "Cloning template...", Color::Blue);
+        let mut spinner = Spinner::new(spinners::Dots, "Cloning template...", Color::Blue);
 
         let now = SystemTime::now()
             .duration_since(UNIX_EPOCH)
