@@ -15,7 +15,7 @@ curl = "0.4.44"
 dunce = "1.0.4"
 git2 = "0.18.0"
 once_cell = "1.18.0"
-open = "4.2.0"
+open = "5.0.0"
 reqwest = { version = "0.11.20", features = ["blocking", "json"] }
 serde = { version = "1.0.188", features = ["derive"] }
 spinoff = { version = "0.8.0", features = ["dots"] }
