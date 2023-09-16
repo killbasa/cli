@@ -1,10 +1,13 @@
 [package]
 name = "kb"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["killbasa"]
 edition = "2021"
 repository = "https://github.com/killbasa/cli"
 license = "MIT"
+
+[profile.release]
+lto = true
 
 [dependencies]
 anyhow = "1.0.75"
