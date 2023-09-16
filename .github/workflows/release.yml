@@ -1,0 +1,41 @@
+name: Release
+
+permissions:
+  contents: write
+
+on:
+  push:
+    tags:
+      - v[0-9]+.*
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v4
+
+      - name: Create release
+        uses: taiki-e/create-gh-release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  upload-assets:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v4
+
+      - name: Upload binary
+        uses: taiki-e/upload-rust-binary-action@v1
+        with:
+          bin: kb
+          tar: unix
+          zip: windows
+          token: ${{ secrets.GITHUB_TOKEN }}
