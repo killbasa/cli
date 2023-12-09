@@ -1,5 +1,6 @@
 use anyhow::Result;
 use clap::Args;
+use git2::Config;
 use serde::Deserialize;
 
 /// Open pages for an NPM package
@@ -28,9 +29,19 @@ struct Repository {
 impl Cli {
     pub fn exec(&self) -> Result<()> {
         if self.github {
+            let config = Config::open_default()?;
             let url = format!("https://registry.npmjs.org/{}", self.name);
 
-            let resp = reqwest::blocking::get(url)?;
+            let user_agent = match config.get_entry("user.email") {
+                Ok(val) => format!("kb-cli ({})", val.value().unwrap()),
+                Err(_) => "kb-cli".to_owned(),
+            };
+
+            let resp = reqwest::blocking::ClientBuilder::new()
+                .build()?
+                .get(url)
+                .header("User-agent", user_agent)
+                .send()?;
 
             if !resp.status().is_success() {
                 open::that(format!("https://www.npmjs.com/package/{}", self.name))?;

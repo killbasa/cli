@@ -5,6 +5,7 @@ use std::fmt::{Display, Formatter, Result};
 pub enum Templates {
     Bare,
     NodeTS,
+    Svelte,
 }
 
 impl Display for Templates {
@@ -12,6 +13,7 @@ impl Display for Templates {
         match self {
             Templates::Bare => write!(f, "bare"),
             Templates::NodeTS => write!(f, "node-ts"),
+            Templates::Svelte => write!(f, "svelte"),
         }
     }
 }

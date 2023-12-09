@@ -2,6 +2,7 @@ use anyhow::{anyhow, Result};
 use clap::Args;
 use git2::Repository;
 use spinoff::{spinners, Color, Spinner};
+use std::fs;
 use url::Url;
 
 use crate::internal::files;
@@ -14,9 +15,9 @@ pub struct Cli {
     url: String,
     /// The output location
     path: Option<String>,
-    /// Intialize a git repository
+    /// Force overwrite the target path
     #[arg(short, long)]
-    git: bool,
+    force: bool,
 }
 
 impl Cli {
@@ -32,21 +33,19 @@ impl Cli {
             return Err(anyhow!("make sure the URL ends with \".git\""));
         }
 
-        let path = files::resolve_path(&self.path, None)
+        let target_path = files::resolve_path(&self.path, None)
             .map_err(|e| anyhow!("failed to resolve path: {}", e))?;
 
-        if path.is_dir() && !path.read_dir()?.next().is_none() {
+        if self.force && target_path.exists() {
+            fs::remove_dir_all(&target_path)
+                .map_err(|err| anyhow!("failed to remove target path: {}", err))?;
+        } else if target_path.is_dir() && !target_path.read_dir()?.next().is_none() {
             spinner.fail("Failed to clone template");
             return Err(anyhow!("there are already files at that location"));
         }
 
-        Repository::clone(&url, &path) //
+        Repository::clone(&url, &target_path) //
             .map_err(|e| anyhow!("failed to clone repo: {}", e))?;
-
-        if self.git {
-            Repository::init(path) //
-                .map_err(|e| anyhow!("failed to initialize git repo: {}", e))?;
-        }
 
         spinner.success("Repository cloned");
 
