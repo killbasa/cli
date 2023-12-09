@@ -5,7 +5,8 @@ use std::io;
 
 use crate::Cli as RootCli;
 
-/// Generate autocompletions
+/// Generate autocompletions.
+/// Example: `kb complete fish > ~/.config/fish/completions/kb.fish`
 #[derive(Args, Debug)]
 #[command()]
 pub struct Cli {
