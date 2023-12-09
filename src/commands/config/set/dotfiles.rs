@@ -15,7 +15,7 @@ impl Cli {
     pub fn exec(&self) -> Result<()> {
         let mut config = app::config().clone();
 
-        let path = files::resolve_path(&Some(self.path.clone()))
+        let path = files::resolve_path(&Some(self.path.clone()), None)
             .map_err(|e| anyhow!("failed to resolve path: {}", e))?
             .display()
             .to_string();
