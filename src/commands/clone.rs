@@ -32,7 +32,7 @@ impl Cli {
             return Err(anyhow!("make sure the URL ends with \".git\""));
         }
 
-        let path = files::resolve_path(&self.path)
+        let path = files::resolve_path(&self.path, None)
             .map_err(|e| anyhow!("failed to resolve path: {}", e))?;
 
         if path.is_dir() && !path.read_dir()?.next().is_none() {

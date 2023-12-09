@@ -21,6 +21,7 @@ enum Commands {
     Config(commands::config::cli::Cli),
     Dotfiles(commands::dotfiles::cli::Cli),
     Open(commands::open::cli::Cli),
+    Shrink(commands::shrink::cli::Cli),
     Template(commands::template::cli::Cli),
 }
 
@@ -34,6 +35,7 @@ fn main() -> Result<()> {
         Commands::Config(cli) => cli.exec(),
         Commands::Dotfiles(cli) => cli.exec(),
         Commands::Open(cli) => cli.exec(),
+        Commands::Shrink(cli) => cli.exec(),
         Commands::Template(cli) => cli.exec(),
     }
 }

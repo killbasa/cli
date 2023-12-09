@@ -1,6 +1,6 @@
 [package]
 name = "kb"
-version = "0.1.1"
+version = "0.2.1"
 authors = ["killbasa"]
 edition = "2021"
 repository = "https://github.com/killbasa/cli"
@@ -11,12 +11,14 @@ lto = true
 
 [dependencies]
 anyhow = "1.0.75"
+byte-unit = "5.0.3"
 clap = { version = "4.4.3", features = ["derive"] }
 clap_complete = "4.4.1"
 confy = "0.5.1"
 curl = "0.4.44"
 dunce = "1.0.4"
 git2 = "0.18.0"
+glob = "0.3.1"
 once_cell = "1.18.0"
 open = "5.0.0"
 reqwest = { version = "0.11.20", features = ["blocking", "json"] }
