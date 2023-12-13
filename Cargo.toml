@@ -9,6 +9,9 @@ license = "MIT"
 [profile.release]
 lto = true
 
+[target.'cfg(unix)'.dependencies]
+openssl = "0.10.61"
+
 [dependencies]
 anyhow = "1.0.75"
 byte-unit = "5.0.3"
