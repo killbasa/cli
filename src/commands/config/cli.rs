@@ -13,6 +13,7 @@ pub struct Cli {
 enum Commands {
     Find(super::find::Cli),
     Set(super::set::cli::Cli),
+    Print(super::print::Cli),
 }
 
 impl Cli {
@@ -20,6 +21,7 @@ impl Cli {
         match &self.command {
             Commands::Find(cli) => cli.exec(),
             Commands::Set(cli) => cli.exec(),
+            Commands::Print(cli) => cli.exec(),
         }
     }
 }

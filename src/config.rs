@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
 const APP_NAME: &str = "kb";
-const FILE_STEM: &str = "config";
+const FILE_STEM: &str = "kb.config";
 
 #[derive(Deserialize, Serialize, Clone, Debug)]
 pub struct Config {
