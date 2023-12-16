@@ -1,6 +1,6 @@
 [package]
 name = "kb"
-version = "0.2.3"
+version = "0.2.4"
 authors = ["killbasa"]
 edition = "2021"
 repository = "https://github.com/killbasa/cli"
