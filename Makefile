@@ -1,6 +1,6 @@
 build:
-	cargo build
+	cargo build --locked
 release:
-	cargo build --release
+	cargo build --locked --release
 install:
-	cargo install --path .
+	cargo install --locked --path .
