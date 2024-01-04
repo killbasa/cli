@@ -10,6 +10,7 @@ const FILE_STEM: &str = "kb.config";
 pub struct Config {
     pub email: Option<String>,
     pub dotfiles: Option<String>,
+    pub infra: Option<String>,
 }
 
 impl Default for Config {
@@ -17,6 +18,7 @@ impl Default for Config {
         Self {
             email: None,
             dotfiles: None,
+            infra: None,
         }
     }
 }
