@@ -4,7 +4,7 @@ edition    = "2021"
 license    = "MIT"
 name       = "kb"
 repository = "https://github.com/killbasa/cli"
-version    = "0.2.6"
+version    = "0.2.7"
 
 [profile.release]
 codegen-units = 1
