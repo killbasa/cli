@@ -12,12 +12,14 @@ pub struct Cli {
 #[derive(Subcommand, Debug)]
 enum Commands {
     Init(super::init::Cli),
+    List(super::list::Cli),
 }
 
 impl Cli {
     pub fn exec(&self) -> Result<()> {
         match &self.command {
             Commands::Init(cli) => cli.exec(),
+            Commands::List(cli) => cli.exec(),
         }
     }
 }

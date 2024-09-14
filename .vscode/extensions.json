@@ -1,0 +1,8 @@
+{
+	"recommendations": [
+		"editorconfig.editorconfig",
+		"skellock.just",
+		"rust-lang.rust-analyzer",
+		"tamasfe.even-better-toml"
+	]
+}
