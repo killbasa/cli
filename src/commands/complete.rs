@@ -1,12 +1,11 @@
 use anyhow::Result;
 use clap::{Args, CommandFactory};
-use clap_complete::{generate, Shell};
+use clap_complete::{Shell, generate};
 use std::io;
 
 use crate::Cli as RootCli;
 
 /// Generate autocompletions.
-/// Example: `kb complete fish > ~/.config/fish/completions/kb.fish`
 #[derive(Args, Debug)]
 #[command()]
 pub struct Cli {
@@ -16,7 +15,7 @@ pub struct Cli {
 }
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
+    pub fn run(&self) -> Result<()> {
         let mut cmd = RootCli::command();
         let bin_name = cmd.get_name().to_string();
 

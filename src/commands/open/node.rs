@@ -27,7 +27,7 @@ struct Repository {
 }
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
+    pub fn run(&self) -> Result<()> {
         if self.github {
             let config = Config::open_default()?;
             let url = format!("https://registry.npmjs.org/{}", self.name);

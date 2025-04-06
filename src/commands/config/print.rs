@@ -1,4 +1,4 @@
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use clap::Args;
 use std::process::{Command, Stdio};
 
@@ -9,7 +9,7 @@ use crate::config;
 pub struct Cli {}
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
+    pub fn run(&self) -> Result<()> {
         let path = config::path()?;
 
         let output = Command::new("cat")

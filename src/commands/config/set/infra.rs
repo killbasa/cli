@@ -1,7 +1,7 @@
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use clap::Args;
 
-use crate::{app, config, internal::files};
+use crate::{config, internal::files};
 
 /// Set the infra repository path
 #[derive(Args, Debug)]
@@ -12,8 +12,8 @@ pub struct Cli {
 }
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
-        let mut config = app::config().clone();
+    pub fn run(&self) -> Result<()> {
+        let mut config = config::config().clone();
 
         let path = files::resolve_path(&Some(self.path.clone()), None)
             .map_err(|e| anyhow!("failed to resolve path: {}", e))?

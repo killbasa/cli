@@ -1,4 +1,4 @@
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use git2::{Repository, StatusEntry};
 
 pub fn uncommitted_changes(path: String) -> Result<usize> {

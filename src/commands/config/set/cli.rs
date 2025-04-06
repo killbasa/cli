@@ -16,10 +16,10 @@ enum Commands {
 }
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
+    pub fn run(&self) -> Result<()> {
         match &self.command {
-            Commands::Dotfiles(cli) => cli.exec(),
-            Commands::Infra(cli) => cli.exec(),
+            Commands::Dotfiles(cli) => cli.run(),
+            Commands::Infra(cli) => cli.run(),
         }
     }
 }

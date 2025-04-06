@@ -1,7 +1,7 @@
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use clap::Args;
 use git2::Repository;
-use spinoff::{spinners, Color, Spinner};
+use spinoff::{Color, Spinner, spinners};
 use std::fs;
 use url::Url;
 
@@ -21,12 +21,11 @@ pub struct Cli {
 }
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
+    pub fn run(&self) -> Result<()> {
         let mut spinner = Spinner::new(spinners::Dots, "Cloning repository...", Color::Blue);
 
-        let url = Url::parse(&self.url)
-            .map_err(|_| anyhow!("please provide a valid URL"))?
-            .to_string();
+        let url =
+            Url::parse(&self.url).map_err(|_| anyhow!("please provide a valid URL"))?.to_string();
 
         if !url.ends_with(".git") {
             spinner.fail("Failed to clone repository");
@@ -39,7 +38,7 @@ impl Cli {
         if self.force && target_path.exists() {
             fs::remove_dir_all(&target_path)
                 .map_err(|err| anyhow!("failed to remove target path: {}", err))?;
-        } else if target_path.is_dir() && !target_path.read_dir()?.next().is_none() {
+        } else if target_path.is_dir() && target_path.read_dir()?.next().is_some() {
             spinner.fail("Failed to clone template");
             return Err(anyhow!("there are already files at that location"));
         }

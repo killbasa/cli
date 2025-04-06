@@ -16,10 +16,10 @@ enum Commands {
 }
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
+    pub fn run(&self) -> Result<()> {
         match &self.command {
-            Commands::Node(cli) => cli.exec(),
-            Commands::Rust(cli) => cli.exec(),
+            Commands::Node(cli) => cli.run(),
+            Commands::Rust(cli) => cli.run(),
         }
     }
 }

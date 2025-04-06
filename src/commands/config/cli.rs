@@ -17,11 +17,11 @@ enum Commands {
 }
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
+    pub fn run(&self) -> Result<()> {
         match &self.command {
-            Commands::Find(cli) => cli.exec(),
-            Commands::Set(cli) => cli.exec(),
-            Commands::Print(cli) => cli.exec(),
+            Commands::Find(cli) => cli.run(),
+            Commands::Set(cli) => cli.run(),
+            Commands::Print(cli) => cli.run(),
         }
     }
 }

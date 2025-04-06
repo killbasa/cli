@@ -29,7 +29,7 @@ struct Repository {
 }
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
+    pub fn run(&self) -> Result<()> {
         if !self.github && !self.docs {
             open::that(format!("https://crates.io/crates/{}", self.name))?;
         }

@@ -1,7 +1,7 @@
 use anyhow::Result;
 use clap::Args;
 
-use crate::{app, internal::git};
+use crate::{config, internal::git};
 
 /// Check if there are uncommited dotfile changes
 #[derive(Args, Debug)]
@@ -9,13 +9,13 @@ use crate::{app, internal::git};
 pub struct Cli {}
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
-        let config = app::config().clone();
+    pub fn run(&self) -> Result<()> {
+        let config = config::config();
 
-        match config.dotfiles {
+        match &config.dotfiles {
             None => println!("No dotfiles path set"),
             Some(path) => {
-                let changes = git::uncommitted_changes(path)?;
+                let changes = git::uncommitted_changes(path.to_string())?;
 
                 match changes {
                     0 => println!("Your dotfiles repository is up to date"),

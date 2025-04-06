@@ -1,26 +1,18 @@
 use anyhow::{Context, Result};
-use confy;
+use once_cell::sync::OnceCell;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
 const APP_NAME: &str = "kb";
 const FILE_STEM: &str = "kb.config";
 
-#[derive(Deserialize, Serialize, Clone, Debug)]
+static CONFIG: OnceCell<Config> = OnceCell::new();
+
+#[derive(Deserialize, Serialize, Clone, Debug, Default)]
 pub struct Config {
     pub email: Option<String>,
     pub dotfiles: Option<String>,
     pub infra: Option<String>,
-}
-
-impl Default for Config {
-    fn default() -> Self {
-        Self {
-            email: None,
-            dotfiles: None,
-            infra: None,
-        }
-    }
 }
 
 pub fn path() -> Result<PathBuf> {
@@ -34,4 +26,12 @@ pub fn load() -> Result<Config> {
 
 pub fn save(config: Config) -> Result<()> {
     confy::store(APP_NAME, FILE_STEM, config).with_context(|| "unable to save config")
+}
+
+pub fn config() -> &'static Config {
+    CONFIG.get().expect("config is not initialized")
+}
+
+pub fn set_global_config(config: Config) {
+    CONFIG.set(config).expect("could not set config")
 }

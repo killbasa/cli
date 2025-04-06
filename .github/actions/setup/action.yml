@@ -1,0 +1,39 @@
+name: "Setup"
+
+description: "Setup Rust tools"
+
+runs:
+  using: "composite"
+  steps:
+    - run: rustup toolchain install --profile minimal --component clippy --component rustfmt 1.86.0
+      shell: bash
+
+    - name: Restore CI tools
+      id: cache-tools-restore
+      uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      with:
+        path: |
+          ~/.cargo/bin/just
+          ~/.cargo/bin/cargo-shear
+        key: cache-tools
+
+    - name: Install cargo-binstall
+      if: steps.cache-tools-restore.outputs.cache-hit != 'true'
+      uses: cargo-bins/cargo-binstall@b9bf4400702f721d469eec4d280125f650c85638 # v1.12.2
+
+    - name: Install cargo-shear
+      if: steps.cache-tools-restore.outputs.cache-hit != 'true'
+      run: cargo binstall just cargo-shear -y
+      shell: bash
+
+    - name: Save CI tools
+      uses: actions/cache/save@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      if: steps.cache-tools-restore.outputs.cache-hit != 'true'
+      with:
+        path: |
+          ~/.cargo/bin/just
+          ~/.cargo/bin/cargo-shear
+        key: cache-tools
+
+    - name: Cache toolchain
+      uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2.7.8

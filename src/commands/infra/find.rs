@@ -1,7 +1,7 @@
 use anyhow::Result;
 use clap::Args;
 
-use crate::app;
+use crate::config;
 
 /// Check the infra path
 #[derive(Args, Debug)]
@@ -9,8 +9,8 @@ use crate::app;
 pub struct Cli {}
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
-        let config = app::config().clone();
+    pub fn run(&self) -> Result<()> {
+        let config = config::config();
 
         match config.dotfiles {
             None => println!("No infra path set"),

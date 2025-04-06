@@ -1,4 +1,3 @@
-mod app;
 mod commands;
 mod config;
 mod internal;
@@ -22,22 +21,20 @@ enum Commands {
     Dotfiles(commands::dotfiles::cli::Cli),
     Infra(commands::infra::cli::Cli),
     Open(commands::open::cli::Cli),
-    Shrink(commands::shrink::cli::Cli),
     Template(commands::template::cli::Cli),
 }
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
-    app::set_global_config(config::load()?);
+    config::set_global_config(config::load()?);
 
     match &cli.command {
-        Commands::Clone(cli) => cli.exec(),
-        Commands::Complete(cli) => cli.exec(),
-        Commands::Config(cli) => cli.exec(),
-        Commands::Dotfiles(cli) => cli.exec(),
-        Commands::Infra(cli) => cli.exec(),
-        Commands::Open(cli) => cli.exec(),
-        Commands::Shrink(cli) => cli.exec(),
-        Commands::Template(cli) => cli.exec(),
+        Commands::Clone(cli) => cli.run(),
+        Commands::Complete(cli) => cli.run(),
+        Commands::Config(cli) => cli.run(),
+        Commands::Dotfiles(cli) => cli.run(),
+        Commands::Infra(cli) => cli.run(),
+        Commands::Open(cli) => cli.run(),
+        Commands::Template(cli) => cli.run(),
     }
 }

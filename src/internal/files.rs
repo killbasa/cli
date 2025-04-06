@@ -1,8 +1,6 @@
 use anyhow::Result;
 use std::{
-    env,
-    ffi::OsStr,
-    fs, io,
+    env, fs,
     path::{Path, PathBuf},
 };
 
@@ -15,8 +13,8 @@ pub fn canonicalize_path(path: &String) -> String {
 
 pub fn resolve_path(path: &Option<String>, default: Option<&str>) -> Result<PathBuf> {
     let result: PathBuf = match path {
-        Some(ref _path) => {
-            let resolved_path = canonicalize_path(&_path);
+        Some(_path) => {
+            let resolved_path = canonicalize_path(_path);
             PathBuf::from(resolved_path)
         }
         None => {
@@ -30,7 +28,7 @@ pub fn resolve_path(path: &Option<String>, default: Option<&str>) -> Result<Path
         }
     };
 
-    return Ok(result);
+    Ok(result)
 }
 
 pub fn copy_recursive<U: AsRef<Path>, V: AsRef<Path>>(
@@ -59,36 +57,12 @@ pub fn copy_recursive<U: AsRef<Path>, V: AsRef<Path>>(
             let path = entry?.path();
             if path.is_dir() {
                 stack.push(path);
-            } else {
-                match path.file_name() {
-                    Some(filename) => {
-                        let dest_path = dest.join(filename);
-                        fs::copy(&path, &dest_path)?;
-                    }
-                    None => {}
-                }
+            } else if let Some(filename) = path.file_name() {
+                let dest_path = dest.join(filename);
+                fs::copy(&path, &dest_path)?;
             }
         }
     }
 
     Ok(())
-}
-
-pub fn dir_size(path: impl Into<PathBuf>) -> io::Result<u64> {
-    fn dir_size(mut dir: fs::ReadDir) -> io::Result<u64> {
-        dir.try_fold(0, |acc, file| {
-            let file = file?;
-            let size = match file.metadata()? {
-                data if data.is_dir() => dir_size(fs::read_dir(file.path())?)?,
-                data => data.len(),
-            };
-            Ok(acc + size)
-        })
-    }
-
-    dir_size(fs::read_dir(path.into())?)
-}
-
-pub fn is_file_name_eq(path: &PathBuf, file_name: &str) -> bool {
-    path.file_name().and_then(OsStr::to_str) == Some(file_name)
 }

@@ -1,7 +1,7 @@
 use anyhow::Result;
 use clap::Args;
 
-use crate::{app, internal::git};
+use crate::{config, internal::git};
 
 /// Check if there are uncommited infra changes
 #[derive(Args, Debug)]
@@ -9,8 +9,8 @@ use crate::{app, internal::git};
 pub struct Cli {}
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
-        let config = app::config().clone();
+    pub fn run(&self) -> Result<()> {
+        let config = config::config().clone();
 
         match config.infra {
             None => println!("No infra path set"),

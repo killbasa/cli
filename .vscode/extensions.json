@@ -1,8 +1,9 @@
 {
 	"recommendations": [
 		"editorconfig.editorconfig",
-		"skellock.just",
+		"esbenp.prettier-vscode",
+		"tamasfe.even-better-toml",
 		"rust-lang.rust-analyzer",
-		"tamasfe.even-better-toml"
+		"skellock.just"
 	]
 }

@@ -1,7 +1,7 @@
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use clap::Args;
 use git2::Repository;
-use spinoff::{spinners, Color, Spinner};
+use spinoff::{Color, Spinner, spinners};
 use std::{
     fs,
     time::{SystemTime, UNIX_EPOCH},
@@ -25,7 +25,7 @@ pub struct Cli {
 }
 
 impl Cli {
-    pub fn exec(&self) -> Result<()> {
+    pub fn run(&self) -> Result<()> {
         let mut spinner = Spinner::new(
             spinners::Dots, //
             "Cloning template...",
@@ -38,7 +38,7 @@ impl Cli {
         if self.force && target_path.exists() {
             fs::remove_dir_all(&target_path)
                 .map_err(|err| anyhow!("failed to remove target path: {}", err))?;
-        } else if target_path.is_dir() && !target_path.read_dir()?.next().is_none() {
+        } else if target_path.is_dir() && target_path.read_dir()?.next().is_some() {
             spinner.fail("Failed to clone template");
             return Err(anyhow!("there are already files at that location"));
         }
@@ -52,11 +52,8 @@ impl Cli {
         Repository::clone("https://github.com/killbasa/templates", &temp_path)
             .map_err(|err| anyhow!("failed to clone repo: {}", err))?;
 
-        files::copy_recursive(
-            format!("{}/templates/{}", temp_path, self.template.to_string()),
-            &target_path,
-        )
-        .map_err(|err| anyhow!("failed to copy files: {}", err))?;
+        files::copy_recursive(format!("{}/templates/{}", temp_path, self.template), &target_path)
+            .map_err(|err| anyhow!("failed to copy files: {}", err))?;
 
         fs::remove_dir_all(temp_path)
             .map_err(|err| anyhow!("failed to remove temporary directory: {}", err))?;

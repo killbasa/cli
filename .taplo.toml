@@ -1,4 +1,4 @@
-include = [".taplo.toml", "Cargo.toml", ".cargo/config.toml", "rust-toolchain.toml"]
+include = ["*.toml"]
 
 [formatting]
 align_entries = true
