@@ -19,7 +19,7 @@ runs:
 
     - name: Install cargo-binstall
       if: steps.cache-tools-restore.outputs.cache-hit != 'true'
-      uses: cargo-bins/cargo-binstall@b9bf4400702f721d469eec4d280125f650c85638 # v1.12.2
+      uses: cargo-bins/cargo-binstall@5cbf019d8cb9b9d5b086218c41458ea35d817691 # v1.12.5
 
     - name: Install cargo-shear
       if: steps.cache-tools-restore.outputs.cache-hit != 'true'
