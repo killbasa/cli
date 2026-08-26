@@ -10,7 +10,7 @@ runs:
 
     - name: Restore CI tools
       id: cache-tools-restore
-      uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
       with:
         path: |
           ~/.cargo/bin/just
@@ -19,7 +19,7 @@ runs:
 
     - name: Install cargo-binstall
       if: steps.cache-tools-restore.outputs.cache-hit != 'true'
-      uses: cargo-bins/cargo-binstall@b9bf4400702f721d469eec4d280125f650c85638 # v1.12.2
+      uses: cargo-bins/cargo-binstall@75b4bfae1b2c753a6806bbce6e6cb89b602de33c # v1.22.0
 
     - name: Install cargo-shear
       if: steps.cache-tools-restore.outputs.cache-hit != 'true'
@@ -27,7 +27,7 @@ runs:
       shell: bash
 
     - name: Save CI tools
-      uses: actions/cache/save@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
       if: steps.cache-tools-restore.outputs.cache-hit != 'true'
       with:
         path: |
@@ -36,4 +36,4 @@ runs:
         key: cache-tools
 
     - name: Cache toolchain
-      uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2.7.8
+      uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
